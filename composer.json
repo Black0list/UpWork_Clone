@@ -1,0 +1,17 @@
+{
+    "name": "youcode/up-work_clone",
+    "autoload": {
+        "psr-4": {
+            "App\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "ABDELKEBIR HADOUI",
+            "email": "abdelkebir123123@gmail.com"
+        }
+    ],
+    "require": {
+        "spipu/html2pdf": "^5.3"
+    }
+}
