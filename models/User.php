@@ -4,7 +4,7 @@ namespace App\models;
 
 use App\config\Database;
 
-class User extends GenericModel{
+class User{
     private int $id;
     private string $firstname;
     private string $lastname;
@@ -45,6 +45,21 @@ class User extends GenericModel{
     public function setEmail($email) { $this->email = $email; }
     public function setPassword($password) { $this->password = $password; }
     public function setRole(Role $role) { $this->role = $role; }
+
+
+    public function Create()
+    { 
+        $Db = Database::getInstance()->getConnection();
+
+        $query = "INSERT INTO {$this->TableName()} " . "(" . implode(', ', $this->getAttributes()) . ")" ." VALUES('{$this->getFirstname()}', '{$this->getLastname()}', '{$this->getEmail()}', '{$this->getPassword()}', '{$this->getRole()->getId()}');";
+        var_dump($query);
+        $statement = $Db->prepare($query);  
+        $statement->execute();
+        $object = $statement->fetchObject($this->getClass());
+  
+
+        return $object;
+    }
 
 
     public function getAttributes(): array{
