@@ -1,4 +1,4 @@
-<form method="POST" action="/auth/login">
+<form method="POST" action="/auth/register">
     <?php
     if(isset($_SESSION['message']))
     {
