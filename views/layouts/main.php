@@ -117,7 +117,7 @@
             </button>
             <!-- Brand -->
             <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="#">
-                <h3 class="text-success"><img src="https://bytewebster.com/img/logo.png" width="50"><span class="text-info">Username</span></h3>
+                <h3 class="text-success"><img src="https://bytewebster.com/img/logo.png" width="50"><span class="text-info"></span></h3>
             </a>
             <!-- User menu (mobile) -->
             <div class="navbar-user d-lg-none">
