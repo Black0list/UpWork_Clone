@@ -4,11 +4,11 @@ namespace App\models;
 
 use App\config\Database;
 
-class Role extends GenericModel
+class Role
 {
-    protected int $id;
-    protected string $role_name;
-    protected string $description;
+    protected int $id = 0;
+    protected string $role_name = '';
+    protected string $description = '';
 
     public function __call($name, $arguments)
     {
@@ -30,6 +30,17 @@ class Role extends GenericModel
     public function setId($id) { $this->id = $id; }
     public function setRoleName($role_name) { $this->role_name = $role_name; }
     public function setDescription($description) { $this->description = $description; }
+
+
+    public function findOneBy($field, $value){
+        $Db = Database::getInstance()->getConnection();
+        $query = "SELECT " . implode(", ", $this->getAttributes()) . " FROM {$this->TableName()} WHERE {$field} = '{$value}' LIMIT 1";
+        $statement = $Db->prepare($query); 
+        $statement->execute();
+        $result = $statement->fetchObject($this->getClass());
+
+        return $result;
+    }
 
     public function getAttributes(): array{
         return ["id", "role_name", "description"];

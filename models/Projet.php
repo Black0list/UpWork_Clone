@@ -3,6 +3,7 @@
 namespace App\models;
 
 use App\config\Database;
+use PDO;
 
 class Projet
 {
@@ -15,6 +16,13 @@ class Projet
     private User $freelancer;
     private User $client;
     private array $terms = [];
+
+    public function __construct()
+    {
+        $this->categorie = new Categorie;
+        $this->freelancer = new User;
+        $this->client = new User;
+    }
 
 
     public function __call($name, $arguments)
@@ -49,6 +57,27 @@ class Projet
     public function setFreelancer(User $freelancer) { $this->freelancer = $freelancer; }
     public function setClient(User $client) { $this->client = $client; }
     public function setTerms(array $terms) { $this->client = $terms; }
+
+
+    public function findAll(){
+        $Db = Database::getInstance()->getConnection();
+        $query = "SELECT * FROM projet";
+        $statement = $Db->prepare($query); 
+        $statement->execute();
+        $objects = $statement->fetchAll(PDO::FETCH_CLASS, Projet::class);
+
+
+        foreach ($objects as $object) {
+            $categorie = $this->categorie->findOneBy("id", $object->categorie_id);
+            $freelancer = $this->freelancer->findOneBy("id", $object->freelancer_id);
+            $client = $this->client->findOneBy("id", $object->client_id);
+            $object->setCategorie($categorie);
+            $object->setFreelancer($freelancer);
+            $object->setClient($client);
+        }
+
+        return $objects;
+    }
 
     public function __toString()
     {

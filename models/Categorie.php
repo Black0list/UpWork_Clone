@@ -31,6 +31,16 @@ class Categorie
     public function setNom($nom) { $this->nom = $nom; }
     public function setDescription($description) { $this->description = $description; }
 
+    public function findOneBy($field, $value){
+        $Db = Database::getInstance()->getConnection();
+        $query = "SELECT * FROM categorie WHERE {$field} = '{$value}' LIMIT 1";
+        $statement = $Db->prepare($query); 
+        $statement->execute();
+        $result = $statement->fetchObject(Categorie::class);
+
+        return $result;
+    }
+
     public function __toString()
     {
         return "id : {$this->getId()}, Name : {$this->getNom()}, Description : {$this->getDescription()}";
