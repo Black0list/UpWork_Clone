@@ -24,11 +24,21 @@ class User
                 }
             }
         }
+        if ($name === "registerAttribues")
+        {
+            if (count($arguments) == 5 ) {
+                $this->firstname = $arguments[0];
+                $this->lastname = $arguments[1];
+                $this->email = $arguments[2];
+                $this->password = $arguments[3];
+                $this->role = $arguments[4];
+            }
+        }
     }
 
     public function login($email, $password)
     {
-        $db = Database::getInstance()->getConnection();
+        $db = Database::getInstance()->getConnection();        
         
     }
 
@@ -38,6 +48,9 @@ class User
     public function getEmail() { return $this->email; }
     public function getPassword() { return $this->password; }
     public function getRole() { return $this->role; }
+    public function getRole_name() { return $this->role->getRoleName(); }
+    
+    
 
     public function setId($id) { $this->id = $id; }
     public function setFirstname($firstname) { $this->firstname = $firstname; }

@@ -1,7 +1,9 @@
 <?php
 
 
-class LoginForm
+namespace app\http;
+
+class Login
 {
     public string $email;
     public string $password;
@@ -14,7 +16,7 @@ class LoginForm
 
     public function __call($name , $args)
     {
-        if($name=='instanceWithEmailAndPassword')
+        if($name=='loginAttributes')
         {
             if(count($args) == 2)
             {
