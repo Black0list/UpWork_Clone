@@ -1,10 +1,10 @@
 <?php
-//
-//if(!isset($_SESSION['user'])){
-//    header('location: /login');
-//}
-//
-//?>
+
+if(!isset($_SESSION['user'])){
+   header('location: /login');
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
     <style>
@@ -117,7 +117,7 @@
             </button>
             <!-- Brand -->
             <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="#">
-                <h3 class="text-success"><img src="https://bytewebster.com/img/logo.png" width="50"><span class="text-info"></span></h3>
+                <h3 class="text-success"><img src="https://bytewebster.com/img/logo.png" width="50"><span class="text-info"><?php echo $_SESSION['user']->getFirstname() ?></span></h3>
             </a>
             <!-- User menu (mobile) -->
             <div class="navbar-user d-lg-none">
@@ -145,8 +145,13 @@
                 <!-- Navigation -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/login">
-                                <i class="bi bi-people"></i> Section
+                        <a class="nav-link" href="/users">
+                                <i class="bi bi-people"></i> Users
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/offres">
+                                <i class="bi bi-window-desktop"></i> Offres
                         </a>
                     </li>
                 </ul>
@@ -195,7 +200,11 @@
         <main class="py-6 bg-surface-secondary">
             <div class="container-fluid">
                 <!-- Card stats -->
-                <div class="row g-6 mb-6">
+                <div class="row g-6 mb-6" <?php if ($_SESSION['user']->getRole()->getRoleName() != "admin") {
+                                                                    echo "style = 'display:none;'";
+                                                                } else {
+                                                                    echo "style = 'display:inline;'";
+                                                                } ?>>
                     <div class="col-xl-3 col-sm-6 col-12">
                         <div class="card shadow border-0">
                             <div class="card-body">

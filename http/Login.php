@@ -1,7 +1,10 @@
 <?php
 
 
-namespace app\http;
+namespace App\http;
+
+use App\config\Database;
+use App\models\User;
 
 class Login
 {
@@ -16,7 +19,7 @@ class Login
 
     public function __call($name , $args)
     {
-        if($name=='loginAttributes')
+        if($name == 'loginAttributes')
         {
             if(count($args) == 2)
             {
@@ -35,8 +38,19 @@ class Login
         return $this->password;
     }
 
+    public function getUserByEmailAndPassword($email, $password)
+    {
+        $Db = Database::getInstance()->getConnection();
+        $query = "SELECT * FROM utilisateur WHERE email = '{$email}' AND password = '{$password}'";
+        $statement = $Db->prepare($query);  
+        $statement->execute();
+        $object = $statement->fetchObject(User::class);
+
+        return $object;
+    }
+
     public function login($email , $password)
     {
-        
+        return  $this->getUserByEmailAndPassword($email, $password);
     }
 }
