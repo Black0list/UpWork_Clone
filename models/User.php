@@ -69,6 +69,7 @@ class User{
         $statement = $Db->prepare($query);  
         $statement->execute();
         $object = $statement->fetchObject(User::class);
+        $object->setId($Db->lastInsertId());
   
 
         return $object;

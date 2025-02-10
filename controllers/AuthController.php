@@ -4,26 +4,32 @@ namespace App\controllers;
 
 use App\core\Application;
 use App\core\Request;
+use app\http\Register;
 use App\models\Role;
 use App\models\User;
 
-class AuthController 
+class AuthController
 {
     private User $userModel;
     private Request $Request;
     private Role $roleModel;
+    private Register $register;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->userModel = new User();
         $this->roleModel = new Role();
+        $this->register = new Register();
     }
 
-    public function Auth(){
+    public function Auth()
+    {
         return Application::$app->Router->renderView("login");
     }
 
-    public function Login(array $data) {
-        if(!empty($data)) {
+    public function Login(array $data)
+    {
+        if (!empty($data)) {
             $user = $this->userModel->login($data["email"], $data["password"]);
         }
 
@@ -35,16 +41,22 @@ class AuthController
         }
     }
 
-    public function register(array $data) {
+    public function register(array $data)
+    {
+        $data = array_values($data);
+        
+        $reg = $this->register->registerAttributes($data);
+        
+        
+        $user = $this->register->register($reg);
+        var_dump($user);
+        die;
 
-        $roleObj = $this->roleModel->findOneBy("role_name", $data["role"]);
-        $data["role"] = $roleObj;
-        $this->userModel->Build($data);
 
-        $user = $this->userModel->Create();
         $_SESSION['user'] = $user;
     }
-    public function logout() {
+    public function logout()
+    {
         session_destroy();
         header('Location: /');
     }

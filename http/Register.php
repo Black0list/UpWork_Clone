@@ -22,17 +22,19 @@ class Register
 
     public function __call($name, $args)
     {
-
+        var_dump($args[0][1]);
         if ($name == 'registerAttributes') {
-            if (count($args) == 6) {
-                $this->firstname = $args[0];
-                $this->lastname = $args[1];
-                $this->email = $args[2];
-                $this->password = $args[3];
-                $this->passwordConfirmation = $args[4];
-                $this->role = $args[5];
-            }
+            
+                $this->firstname = $args[0][0];
+                $this->lastname = $args[0][1];
+                $this->email = $args[0][2];
+                $this->password = $args[0][3];
+                $this->passwordConfirmation = $args[0][4];
+                $this->role = $args[0][5];
+            
         }
+        return $this;
+        
     }
 
     public function getFirstname()
@@ -74,6 +76,7 @@ class Register
             $role = new Role();
             $role->setRoleName($register->getRoleName());
             $role->findByName($role->getRoleName());
+            
             $user = new User();
             $user->registerAttributes(
                 $register->getFirstname(),
@@ -82,7 +85,9 @@ class Register
                 $register->getPassword(),
                 $role
             );
-            $user->create();
+        
+            return $user->create();
+            
         }
         else
         {
