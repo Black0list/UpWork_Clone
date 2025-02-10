@@ -14,6 +14,7 @@ class Register
     private string $password;
     private string $passwordConfirmation;
     private string $role;
+    private User $userModel;
 
 
 
@@ -87,9 +88,5 @@ class Register
         {
             return new Exception("password invalide");
         }
-
-
-
-
     }
 }
