@@ -55,7 +55,7 @@ class User{
         var_dump($query);
         $statement = $Db->prepare($query);  
         $statement->execute();
-        $object = $statement->fetchObject($this->getClass());
+        $object = $statement->fetchObject(User::class);
   
 
         return $object;
@@ -64,10 +64,6 @@ class User{
 
     public function getAttributes(): array{
         return ["firstname", "lastname", "email", "password", "role_id"];
-    }
-
-    public function getClass(){
-        return User::class;
     }
 
     public function TableName(): String{
