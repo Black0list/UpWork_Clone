@@ -4,7 +4,7 @@ namespace App\models;
 
 use App\config\Database;
 
-class Role
+class Role extends GenericModel
 {
     protected int $id;
     protected string $role_name;
@@ -30,6 +30,18 @@ class Role
     public function setId($id) { $this->id = $id; }
     public function setRoleName($role_name) { $this->role_name = $role_name; }
     public function setDescription($description) { $this->description = $description; }
+
+    public function getAttributes(): array{
+        return ["id", "role_name", "description"];
+    }
+
+    public function getClass(){
+        return Role::class;
+    }
+
+    public function TableName(): String{
+        return "role";
+    }
 
     public function __toString()
     {
