@@ -33,7 +33,7 @@ CREATE TABLE Projet (
     id SERIAL PRIMARY KEY,
     nom VARCHAR(100),
     description TEXT,
-    duree INT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     categorie_id INT REFERENCES Categorie(id),
     status VARCHAR(20),
     freelancer_id INT REFERENCES Utilisateur(id),
@@ -92,6 +92,7 @@ CREATE TABLE Message (
     id SERIAL PRIMARY KEY,
     sender_id INT REFERENCES Utilisateur(id),
     receiver_id INT REFERENCES Utilisateur(id),
+    date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     content TEXT,
     is_read BOOLEAN DEFAULT FALSE
 );
