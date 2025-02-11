@@ -102,21 +102,15 @@ class Router
     public function renderView($views)
     {
         $viewContent = $this->renderOnlyView($views);
+        $layoutContent = $this->renderLayouts();
 
-        if($views === "login" || $views === "register")
-        {
-            $layoutContent = $this->renderLayouts("form");
-            return str_replace("{{content}}", $viewContent, $layoutContent);
-        } else {
-            $layoutContent = $this->renderLayouts("main");
-            return str_replace("{{content}}", $viewContent, $layoutContent);
-        }
+        return str_replace("{{content}}", $viewContent, $layoutContent);
     }
 
-    public function renderLayouts($layout)
+    public function renderLayouts()
     {
         ob_start();
-        include_once Application::$ROOT_PATH."\\views\\layouts\\$layout.php";
+        include_once Application::$ROOT_PATH."\\views\\layouts\\main.php";
         return ob_get_clean();
     }
 
