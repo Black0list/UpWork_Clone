@@ -4,7 +4,7 @@ namespace App\models;
 
 use App\config\Database;
 
-class Role
+class Role extends GenericModel
 {
     protected int $id;
     protected string $role_name;

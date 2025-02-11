@@ -24,16 +24,6 @@ class User{
                 }
             }
         }
-        if ($name === "registerAttribues")
-        {
-            if (count($arguments) == 5 ) {
-                $this->firstname = $arguments[0];
-                $this->lastname = $arguments[1];
-                $this->email = $arguments[2];
-                $this->password = $arguments[3];
-                $this->role = $arguments[4];
-            }
-        }
     }
 
     public function login($email, $password)
@@ -48,9 +38,6 @@ class User{
     public function getPassword() { return $this->password; }
     public function getCPassword() { return $this->Cpassword; }
     public function getRole() { return $this->role; }
-    public function getRole_name() { return $this->role->getRoleName(); }
-    
-    
 
     public function setId($id) { $this->id = $id; }
     public function setFirstname($firstname) { $this->firstname = $firstname; }
@@ -68,8 +55,7 @@ class User{
         var_dump($query);
         $statement = $Db->prepare($query);  
         $statement->execute();
-        $object = $statement->fetchObject(User::class);
-        $object->setId($Db->lastInsertId());
+        $object = $statement->fetchObject($this->getClass());
   
 
         return $object;
@@ -78,6 +64,10 @@ class User{
 
     public function getAttributes(): array{
         return ["firstname", "lastname", "email", "password", "role_id"];
+    }
+
+    public function getClass(){
+        return User::class;
     }
 
     public function TableName(): String{
