@@ -3,6 +3,7 @@
 namespace App\models;
 
 use App\config\Database;
+use PDO;
 
 class Role
 {
@@ -38,9 +39,39 @@ class Role
         $statement = $Db->prepare($query); 
         $statement->execute();
         $result = $statement->fetchObject($this->getClass());
-
         return $result;
     }
+    public function create()
+    {
+        $Db = Database::getInstance()->getConnection();
+        $query = "INSERT INTO role (role_name , description) VALUES ('" . $this->getRoleName() ." ',' ".$this->getDescription()."';)";
+        $stmt = $Db->prepare($query); 
+        $stmt->execute();
+        $this->setId($Db->lastInsertId());
+    }
+    public function update()
+    {
+        $Db = Database::getInstance()->getConnection();
+        $query = "UPDATE TABLE role SET role_name = '".$this->getRoleName() . "' , SET description = '".$this->getDescription()."' WHERE id = ".$this->getId().";";
+        $stmt = $Db->prepare($query); 
+        $stmt->execute();
+    }
+    public function delete()
+    {
+        $Db = Database::getInstance()->getConnection();
+        $query = "DELETE FROM role WHERE id = " .$this->getId().";";
+        $stmt = $Db->prepare($query); 
+        $stmt->execute();
+    }
+    public function findAll()
+    {
+        $Db = Database::getInstance()->getConnection();
+        $query = "SELECT id , role_name , description FROM role;";
+        $stmt = $Db->prepare($query); 
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_CLASS, User::class);
+    }
+
 
     public function getAttributes(): array{
         return ["id", "role_name", "description"];
@@ -59,4 +90,8 @@ class Role
         return "id : {$this->getId()}, Role Name : {$this->getRoleName()}, Description : {$this->getDescription()}";
     }
 }
+
+
+
+
 
