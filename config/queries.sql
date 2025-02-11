@@ -92,6 +92,7 @@ CREATE TABLE Message (
     id SERIAL PRIMARY KEY,
     sender_id INT REFERENCES Utilisateur(id),
     receiver_id INT REFERENCES Utilisateur(id),
+    date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     content TEXT,
     is_read BOOLEAN DEFAULT FALSE
 );
