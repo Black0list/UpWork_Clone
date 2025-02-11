@@ -11,7 +11,8 @@ class HomeController
         return Application::$app->Router->renderView("home");
     }
 
-    public function Home2(){
+    public function Home2()
+    {
         echo "Hadoui";
     }
 
