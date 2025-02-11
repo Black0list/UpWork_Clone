@@ -3,6 +3,7 @@
 namespace App\models;
 
 use App\config\Database;
+use PDO;
 
 class Categorie
 {
@@ -39,6 +40,17 @@ class Categorie
         $result = $statement->fetchObject(Categorie::class);
 
         return $result;
+    }
+
+
+    public function getAll(){
+        $Db = Database::getInstance()->getConnection();
+        $query = "SELECT * FROM categorie";
+        $statement = $Db->prepare($query); 
+        $statement->execute();
+        $objects = $statement->fetchAll(PDO::FETCH_CLASS, Categorie::class);
+
+        return $objects;
     }
 
     public function __toString()

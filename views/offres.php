@@ -1,9 +1,13 @@
 <?php
 
+use App\controllers\CategoryController;
 use App\models\Projet;
 
 $projetModel = new Projet();
 $projects = $projetModel->findAll();
+
+$categoryController = new CategoryController();
+$categories = $categoryController->getAll();
 
 ?>
 <div class="card shadow border-0 mb-7">
@@ -24,15 +28,24 @@ $projects = $projetModel->findAll();
                     <div class="modal-body">
                         <form action="/projet/create" method="POST">
                             <div class="mb-3">
-                                <label for="categorie_name" class="form-label">Categorie Name</label>
-                                <input type="text" id="categorie_name" name="categorie_name" class="form-control" placeholder="Enter the name" required>
+                                <label for="nom" class="form-label">Nom</label>
+                                <input id="nom" name="nom" class="form-control" placeholder="Enter the name of the Offer">
                             </div>
                             <div class="mb-3">
                                 <label for="description" class="form-label">Description</label>
-                                <textarea id="description" name="description" class="form-control" placeholder="Enter the description"></textarea>
+                                <textarea id="description" name="description" class="form-control" placeholder="Enter the Description of the Offer"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="category" class="form-label">Category</label>
+                                <select id="category" name="category" class="form-select" required>
+                                    <?php
+                                    foreach ($categories as $value) { ?>
+                                        <option class="text-dark" value="<?php echo $value->getId() ?>"><?php echo $value->getNom() ?></option>
+                                    <?php } ?>
+                                </select>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary">Create</button>
                                 <button type="button" class="btn btn-secondary" onclick="window.history.back();">Cancel</button>
                             </div>
                         </form>
