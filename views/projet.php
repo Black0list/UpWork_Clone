@@ -27,10 +27,13 @@
                                 <label for="category" class="form-label">Category</label>
                                 <select id="category" name="category" class="form-select" required>
                                     <?php
-                                    foreach ($data['category'] as $value) { ?>
+                                    foreach ($datas['category'] as $value) { ?>
                                         <option value="<?php echo $value->getId() ?>"><?php echo $value->getNom() ?></option>
                                     <?php } ?>
                                 </select>
+                            </div>
+                            <div class="mb-3">
+                                <input type="hidden" id="client_id" name="client_id" value="<?php echo $_SESSION['user']->getId() ?>" class="form-control" placeholder="Enter the name of the Offer">
                             </div>
                             <div class="d-flex justify-content-end gap-2">
                                 <button type="submit" class="btn btn-primary">Create</button>
@@ -62,12 +65,12 @@
                         <p class="text-muted"><strong>Freelancer:</strong> <?php echo $project->getFreelancer()->getFirstname(); ?></p>
                     </div>
                     <div class="card-footer bg-light text-center">
-                        <form action="/project/delete" method="POST" style="display:inline;">
-                            <input type="hidden" name="project_id" value="<?php echo $project->getId(); ?>">
+                        <form action="/projet/delete" method="POST" style="display:inline;">
+                            <input type="hidden" name="projet_id" value="<?php echo $project->getId(); ?>">
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                         </form>
 
-                        <form action="/project/edit" method="POST" style="display:inline;">
+                        <form action="/projet/edit" method="POST" style="display:inline;">
                             <input type="hidden" name="project_id" value="<?php echo $project->getId(); ?>">
                             <button type="submit" class="btn btn-primary btn-sm">Edit</button>
                         </form>

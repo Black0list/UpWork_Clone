@@ -59,6 +59,15 @@ class Projet
     public function setTerms(array $terms) { $this->client = $terms; }
 
 
+    public function Create()
+    {
+        $Db = Database::getInstance()->getConnection();
+        $query = "INSERT INTO Projet (nom, description, category_id, status, freelancer_id, client_id) VALUES('{$this->getNom()}', '{$this->getDescription()}', '{$this->getCategory()->getId()}', '{$this->getStatus()}', '{$this->getFreelancer()->getId()}', '{$this->getClient()->getId()}')";
+        $statement = $Db->prepare($query); 
+        $statement->execute();
+    }
+
+
     public function getAll(){
         $Db = Database::getInstance()->getConnection();
         $query = "SELECT * FROM projet";
@@ -77,6 +86,24 @@ class Projet
         }
 
         return $objects;
+    }
+
+    public function findOneBy($field, $value){
+        $Db = Database::getInstance()->getConnection();
+        $query = "SELECT * FROM projet WHERE {$field} = '{$value}' LIMIT 1";
+        $statement = $Db->prepare($query); 
+        $statement->execute();
+        $object = $statement->fetchObject(Projet::class);
+
+        return $object;
+    }
+
+    public function Delete()
+    {
+        $Db = Database::getInstance()->getConnection();
+        $query = "DELETE FROM projet WHERE id = {$this->getId()}";
+        $statement = $Db->prepare($query);  
+        $statement->execute();
     }
 
     public function __toString()
