@@ -3,6 +3,7 @@
 namespace App\models;
 
 use App\config\Database;
+use PDO;
 
 class Role
 {
@@ -40,6 +41,16 @@ class Role
         $result = $statement->fetchObject($this->getClass());
 
         return $result;
+    }
+
+    public function getAll(){
+        $Db = Database::getInstance()->getConnection();
+        $query = "SELECT * FROM {$this->TableName()}";
+        $statement = $Db->prepare($query); 
+        $statement->execute();
+        $roles = $statement->fetchAll(PDO::FETCH_CLASS, Role::class);
+
+        return $roles;
     }
 
     public function getAttributes(): array{

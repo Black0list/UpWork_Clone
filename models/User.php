@@ -80,7 +80,7 @@ class User{
         return $object;
     }
 
-    public function findAll(){
+    public function getAll(){
         $Db = Database::getInstance()->getConnection();
         $query = "SELECT * FROM {$this->TableName()}";
         $statement = $Db->prepare($query); 

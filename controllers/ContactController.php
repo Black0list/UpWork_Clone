@@ -7,8 +7,8 @@ use App\core\Application;
 class ContactController
 {
 
-    public function Contact(){
-        return Application::$app->Router->renderView("contact");
+    public function Contact($params){
+        return Application::$app->Router->renderView("contact", $params);
     }
 
     public function Transform(array $data)

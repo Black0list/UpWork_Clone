@@ -46,11 +46,16 @@ class Router
         }
 
         if (class_exists($controllerClass, true)) {
-
             if(!method_exists($controllerClass, $controllerMethod)) {
-              $controllerMethod = ucfirst($uri[0]);
+                $file = Application::$ROOT_PATH."\\views\\$uri[0].php";
+                if(file_exists($file)){
+                    Application::$app->Router->{strtolower($method)}($path, $uri[0]);
+                } else {
+                    Application::$app->Router->{strtolower($method)}($path, false);
+                }
+            } else {
+                Application::$app->Router->{strtolower($method)}($path, [$controllerClass, $controllerMethod]);
             }
-            Application::$app->Router->{strtolower($method)}($path, [$controllerClass, $controllerMethod]);
         } else {
             $file = Application::$ROOT_PATH."\\views\\$uri[0].php";
             if(file_exists($file)){
@@ -74,12 +79,18 @@ class Router
         if($callback === false)
         {
             $this->Response->SetStatusCode(404);
-            return $this->renderView("_404");
+            return $this->renderView("_404", $params);
         }
 
         if(is_string($callback))
         {
-            return $this->renderView($callback);
+            $class = "App\\controllers\\" . ucfirst($callback) . "Controller";
+            if(class_exists($class, true) && method_exists($class, "getAll"))
+            {
+                $Controller = new $class;
+                $params = $Controller->getAll();
+            }
+            return $this->renderView($callback, $params);
         }
         
         if(is_array($callback))
@@ -95,13 +106,13 @@ class Router
 
             return $callback[0]->$method();
         }
-
-        return call_user_func($callback);
+        
+        return call_user_func($callback, $params);
     }
 
-    public function renderView($views)
+    public function renderView($views, $params)
     {
-        $viewContent = $this->renderOnlyView($views);
+        $viewContent = $this->renderOnlyView($views, $params);
 
         if($views === "login" || $views === "register")
         {
@@ -120,10 +131,22 @@ class Router
         return ob_get_clean();
     }
 
-    public function renderOnlyView($view)
+    public function renderOnlyView($view, $params)
     {
         ob_start();
         $file = Application::$ROOT_PATH."\\views\\$view.php";
+        $datas['data'] = $params;
+         foreach((array)$datas['data'][0] as $object)
+         {
+             if(gettype($object) === "object")
+             {
+                $className = lcfirst(explode("\\", get_class($object))[2]);
+                $class = "App\\controllers\\".$className."Controller";
+                $controller = new $class;
+                
+                $datas[$className] = $controller->getAll();
+             }
+         }
         include $file;
         return ob_get_clean();
     }

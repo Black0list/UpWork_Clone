@@ -3,8 +3,9 @@
 namespace App\models;
 
 use App\config\Database;
+use PDO;
 
-class Categorie
+class Category
 {
     protected int $id;
     protected string $nom;
@@ -33,12 +34,23 @@ class Categorie
 
     public function findOneBy($field, $value){
         $Db = Database::getInstance()->getConnection();
-        $query = "SELECT * FROM categorie WHERE {$field} = '{$value}' LIMIT 1";
+        $query = "SELECT * FROM category WHERE {$field} = '{$value}' LIMIT 1";
         $statement = $Db->prepare($query); 
         $statement->execute();
-        $result = $statement->fetchObject(Categorie::class);
+        $result = $statement->fetchObject(Category::class);
 
         return $result;
+    }
+
+
+    public function getAll(){
+        $Db = Database::getInstance()->getConnection();
+        $query = "SELECT * FROM category";
+        $statement = $Db->prepare($query); 
+        $statement->execute();
+        $objects = $statement->fetchAll(PDO::FETCH_CLASS, Category::class);
+
+        return $objects;
     }
 
     public function __toString()

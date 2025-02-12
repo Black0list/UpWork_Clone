@@ -23,9 +23,9 @@ class AuthController
         $this->register = new Register;
     }
 
-    public function Auth()
+    public function Auth($params)
     {
-        return Application::$app->Router->renderView("login");
+        return Application::$app->Router->renderView("login", $params);
     }
 
     public function Login(array $data)

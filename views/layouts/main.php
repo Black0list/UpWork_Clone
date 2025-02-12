@@ -145,12 +145,12 @@ if(!isset($_SESSION['user'])){
                 <!-- Navigation -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/users">
+                        <a class="nav-link" href="/user">
                                 <i class="bi bi-people"></i> Users
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/offres">
+                        <a class="nav-link" href="/projet">
                                 <i class="bi bi-window-desktop"></i> Offres
                         </a>
                     </li>
