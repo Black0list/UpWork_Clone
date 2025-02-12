@@ -69,7 +69,7 @@ class Role
         $query = "SELECT id , role_name , description FROM role;";
         $stmt = $Db->prepare($query); 
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_CLASS, User::class);
+        return $stmt->fetchAll(PDO::FETCH_CLASS, Role::class);
     }
 
 
