@@ -1,19 +1,10 @@
-<?php
-
-use App\models\Role;
-
-$roleModel = new Role();
-$roles = $roleModel->findAll();
-// var_dump($roles);
-// die;
-?>
 <div class="card shadow border-0 mb-7">
     <div class="card-header bg-primary text-white text-center">
         <h5 class="mb-0">Roles</h5>
     </div>
     <div class="table-responsive p-4">
         <?php 
-            if (is_null($roles) || empty($roles)) {
+            if (is_null($datas['data']) || empty($datas['data'])) {
                 echo "<div class='d-flex justify-content-center align-items-center w-100 py-3'>
                         <span class='text-muted fs-5'>There is no Data</span>
                     </div>";
@@ -29,12 +20,12 @@ $roles = $roleModel->findAll();
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($roles as $value) { ?>
+                <?php foreach ($datas['data'] as $value) { ?>
                     <tr>
                         <td><?php echo $value->getRoleName(); ?></td>
                         <td><?php echo $value->getDescription(); ?></td>
                         <?php
-                        if (strtolower($value->getRole_name()) != "admin") { ?>
+                        if (strtolower($value->getRoleName()) != "admin") { ?>
                             <td>
                                 <form action="/role/delete" method="POST" style="display:inline;">
                                     <input type="hidden" name="role_id" value="<?php echo $value->getId(); ?>">

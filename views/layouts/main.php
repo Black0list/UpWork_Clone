@@ -155,8 +155,13 @@ if(!isset($_SESSION['user'])){
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/roles">
+                        <a class="nav-link" href="/role">
                                 <i class="bi bi-window-desktop"></i> Roles
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/category">
+                                <i class="bi bi-bookmarks"></i> Categories
                         </a>
                     </li>
                 </ul>
