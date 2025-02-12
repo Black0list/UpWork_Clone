@@ -1,15 +1,3 @@
-<?php
-
-use App\controllers\CategoryController;
-use App\models\Projet;
-
-$projetModel = new Projet();
-$projects = $projetModel->findAll();
-
-$categoryController = new CategoryController();
-$categories = $categoryController->getAll();
-
-?>
 <div class="card shadow border-0 mb-7">
     <div class="card-header bg-primary text-white text-center">
         <h5 class="mb-0">Projects</h5>
@@ -39,8 +27,8 @@ $categories = $categoryController->getAll();
                                 <label for="category" class="form-label">Category</label>
                                 <select id="category" name="category" class="form-select" required>
                                     <?php
-                                    foreach ($categories as $value) { ?>
-                                        <option class="text-dark" value="<?php echo $value->getId() ?>"><?php echo $value->getNom() ?></option>
+                                    foreach ($data['category'] as $value) { ?>
+                                        <option value="<?php echo $value->getId() ?>"><?php echo $value->getNom() ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -55,7 +43,7 @@ $categories = $categoryController->getAll();
         </div>
     </div>
     <div class="row g-4 px-4 py-4">
-        <?php foreach ($projects as $project) { ?>
+        <?php foreach ($datas['data'] as $project) { ?>
             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card h-100 shadow-sm border-1 hover-lift">
                     <div class="card-body text-center">
@@ -68,7 +56,7 @@ $categories = $categoryController->getAll();
                         <p class="card-text text-muted" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 200px;">
                             <?php echo $project->getDescription(); ?>
                         </p>
-                        <p class="text-muted mb-1"><strong>Category:</strong> <?php echo $project->getCategorie()->getNom(); ?></p>
+                        <p class="text-muted mb-1"><strong>Category:</strong> <?php echo $project->getCategory()->getNom(); ?></p>
                         <p class="text-muted mb-1"><strong>Status:</strong> <?php echo $project->getStatus(); ?></p>
                         <p class="text-muted mb-1"><strong>Client:</strong> <?php echo $project->getClient()->getFirstname(); ?></p>
                         <p class="text-muted"><strong>Freelancer:</strong> <?php echo $project->getFreelancer()->getFirstname(); ?></p>
@@ -82,6 +70,16 @@ $categories = $categoryController->getAll();
                         <form action="/project/edit" method="POST" style="display:inline;">
                             <input type="hidden" name="project_id" value="<?php echo $project->getId(); ?>">
                             <button type="submit" class="btn btn-primary btn-sm">Edit</button>
+                        </form>
+
+                        <form action="/projet/apply" method="POST" style="display:inline;">
+                            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user']->getId() ?>">
+                            <button type="submit" class="btn btn-sm btn-success">Apply</button>
+                        </form>
+
+                        <form action="/projet/approve" method="POST" style="display:inline;">
+                            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user']->getId() ?>">
+                            <button type="submit" class="btn btn-sm btn-success">Approve</button>
                         </form>
                     </div>
                 </div>

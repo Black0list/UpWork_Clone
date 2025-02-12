@@ -22,7 +22,7 @@ CREATE TABLE Skill (
 );
 
 
-CREATE TABLE Categorie (
+CREATE TABLE Category (
     id SERIAL PRIMARY KEY,
     nom VARCHAR(50),
     description TEXT
@@ -34,7 +34,7 @@ CREATE TABLE Projet (
     nom VARCHAR(100),
     description TEXT,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    categorie_id INT REFERENCES Categorie(id),
+    category_id INT REFERENCES Category(id),
     status VARCHAR(20),
     freelancer_id INT REFERENCES Utilisateur(id),
     client_id INT REFERENCES Utilisateur(id)
@@ -51,7 +51,7 @@ CREATE TABLE Contract (
     id SERIAL PRIMARY KEY,
     client_id INT REFERENCES Utilisateur(id),
     freelancer_id INT REFERENCES Utilisateur(id),
-    project_id INT REFERENCES Projet(id),
+    projet_id INT REFERENCES Projet(id),
     terms_id INT REFERENCES Terms(id),
     status VARCHAR(20)
 );
@@ -60,7 +60,7 @@ CREATE TABLE Contract (
 CREATE TABLE Proposal (
     id SERIAL PRIMARY KEY,
     freelancer_id INT REFERENCES Utilisateur(id),
-    project_id INT REFERENCES Projet(id),
+    projet_id INT REFERENCES Projet(id),
     quote TEXT,
     status VARCHAR(20),
     client_id INT REFERENCES Utilisateur(id)
@@ -85,7 +85,7 @@ CREATE TABLE Conversation (
     id SERIAL PRIMARY KEY,
     user1_id INT REFERENCES Utilisateur(id),
     user2_id INT REFERENCES Utilisateur(id),
-    project_id INT REFERENCES Projet(id)
+    projet_id INT REFERENCES Projet(id)
 );
 
 CREATE TABLE Message (

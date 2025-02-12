@@ -11,7 +11,7 @@ class Projet
     private string $nom;
     private string $description;
     private String $created_at;
-    private Categorie $categorie;
+    private Category $category;
     private string $status;
     private User $freelancer;
     private User $client;
@@ -19,7 +19,7 @@ class Projet
 
     public function __construct()
     {
-        $this->categorie = new Categorie;
+        $this->category = new Category;
         $this->freelancer = new User;
         $this->client = new User;
     }
@@ -42,7 +42,7 @@ class Projet
     public function getNom() { return $this->nom; }
     public function getDescription() { return $this->description; }
     public function getDate() { return $this->created_at; }
-    public function getCategorie() { return $this->categorie; }
+    public function getCategory() { return $this->category; }
     public function getStatus() { return $this->status; }
     public function getFreelancer() { return $this->freelancer; }
     public function getClient() { return $this->client; }
@@ -52,14 +52,14 @@ class Projet
     public function setNom($nom) { $this->nom = $nom; }
     public function setDescription($description) { $this->description = $description; }
     public function setDate($created_at) { $this->created_at = $created_at; }
-    public function setCategorie( Categorie $categorie) { $this->categorie = $categorie; }
+    public function setCategory( Category $category) { $this->category = $category; }
     public function setStatus($status) { $this->status = $status; }
     public function setFreelancer(User $freelancer) { $this->freelancer = $freelancer; }
     public function setClient(User $client) { $this->client = $client; }
     public function setTerms(array $terms) { $this->client = $terms; }
 
 
-    public function findAll(){
+    public function getAll(){
         $Db = Database::getInstance()->getConnection();
         $query = "SELECT * FROM projet";
         $statement = $Db->prepare($query); 
@@ -68,10 +68,10 @@ class Projet
 
 
         foreach ($objects as $object) {
-            $categorie = $this->categorie->findOneBy("id", $object->categorie_id);
+            $category = $this->category->findOneBy("id", $object->category_id);
             $freelancer = $this->freelancer->findOneBy("id", $object->freelancer_id);
             $client = $this->client->findOneBy("id", $object->client_id);
-            $object->setCategorie($categorie);
+            $object->setCategory($category);
             $object->setFreelancer($freelancer);
             $object->setClient($client);
         }

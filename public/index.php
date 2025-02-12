@@ -1,6 +1,5 @@
 <?php
 
-use App\controllers\AuthController;
 use App\core\Application;
 use App\models\User;
 

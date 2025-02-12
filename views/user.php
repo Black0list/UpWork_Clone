@@ -1,19 +1,10 @@
-<?php
-
-use App\models\User;
-
-$userModel = new User;
-$users = $userModel->findAll();
-// var_dump($users);
-// die;
-?>
 <div class="card shadow border-0 mb-7">
     <div class="card-header bg-primary text-white text-center">
         <h5 class="mb-0">Users</h5>
     </div>
     <div class="table-responsive p-4">
         <?php 
-            if (is_null($users) || empty($users)) {
+            if (is_null($datas) || empty($datas)) {
                 echo "<div class='d-flex justify-content-center align-items-center w-100 py-3'>
                         <span class='text-muted fs-5'>There is no Data</span>
                     </div>";
@@ -30,7 +21,7 @@ $users = $userModel->findAll();
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($users as $value) { ?>
+                <?php foreach ($datas['data'] as $value) { ?>
                     <tr>
                         <td><?php echo $value->getFirstname(); ?></td>
                         <td><?php echo $value->getEmail(); ?></td>
