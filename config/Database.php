@@ -8,7 +8,7 @@ use PDOException;
 class Database {
     private static string $servername = "localhost";
     private static string $username = "postgres";
-    private static string $password = "hadoui";
+    private static string $password = "abir2016.";
     private static string $dbname = "mvc_database";
     private static $connection;
     private static $instance;

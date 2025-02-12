@@ -154,6 +154,11 @@ if(!isset($_SESSION['user'])){
                                 <i class="bi bi-window-desktop"></i> Offres
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/roles">
+                                <i class="bi bi-window-desktop"></i> Roles
+                        </a>
+                    </li>
                 </ul>
                 <!-- Divider -->
                 <hr class="navbar-divider my-5 opacity-20">
