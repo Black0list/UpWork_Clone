@@ -50,10 +50,15 @@
             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card h-100 shadow-sm border-1 hover-lift">
                     <div class="card-body text-center">
-                        <div class="col-auto">
-                            <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
-                                <i class="bi bi-folder"></i>
-                            </div>
+                        <div class="col-auto d-flex justify-content-between align-items-center">
+                        <form action="/message" method="POST" style="display:inline;">
+                                <input type="hidden" name="client_id" value="<?php echo $project->getClient()->getId() ?>">
+                                <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-chat-dots-fill"></i></button>
+                            </form>
+                            <form action="/projet/show" method="POST" style="display:inline;">
+                                <input type="hidden" name="projet_id" value="<?php echo $project->getId() ?>">
+                                <button type="submit" class="btn btn-sm btn-secondary"><i class="bi bi-eye-fill"></i></button>
+                            </form>
                         </div>
                         <h5 class="card-title"><?php echo $project->getNom(); ?></h5>
                         <p class="card-text text-muted" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 200px;">
@@ -70,13 +75,9 @@
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                         </form>
 
-                        <form action="/projet/edit" method="POST" style="display:inline;">
-                            <input type="hidden" name="project_id" value="<?php echo $project->getId(); ?>">
-                            <button type="submit" class="btn btn-primary btn-sm">Edit</button>
-                        </form>
-
                         <form action="/projet/apply" method="POST" style="display:inline;">
                             <input type="hidden" name="user_id" value="<?php echo $_SESSION['user']->getId() ?>">
+                            <input type="hidden" name="projet_id" value="<?php echo $project->getId(); ?>">
                             <button type="submit" class="btn btn-sm btn-success">Apply</button>
                         </form>
 
@@ -87,7 +88,6 @@
                     </div>
                 </div>
             </div>
-
         <?php } ?>
     </div>
 </div>

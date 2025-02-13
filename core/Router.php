@@ -136,19 +136,21 @@ class Router
         ob_start();
         $file = Application::$ROOT_PATH."\\views\\$view.php";
         $datas['data'] = $params;
-        if (!is_null($datas['data']) && !empty($datas['data']) && isset($datas['data'][0])) {
-        foreach((array)$datas['data'][0] as $object)
-        {
-            if(gettype($object) === "object")
+
+            if (is_array($datas['data']) && !is_null($datas['data']) && !empty($datas['data']) && (isset($datas['data'][0])))
             {
-                $className = lcfirst(explode("\\", get_class($object))[2]);
-                $class = "App\\controllers\\".$className."Controller";
-                $controller = new $class;
-                
-                $datas[$className] = $controller->getAll();
+                foreach((array)$datas['data'][0] as $object)
+                {
+                    if(gettype($object) === "object")
+                    {
+                        $className = lcfirst(explode("\\", get_class($object))[2]);
+                        $class = "App\\controllers\\".$className."Controller";
+                        $controller = new $class;
+                            
+                        $datas[$className] = $controller->getAll();
+                    }
+                }
             }
-        }
-        }
         include $file;
         return ob_get_clean();
     }

@@ -95,6 +95,13 @@ class Projet
         $statement->execute();
         $object = $statement->fetchObject(Projet::class);
 
+        $category = $this->category->findOneBy("id", $object->category_id);
+        $freelancer = $this->freelancer->findOneBy("id", $object->freelancer_id);
+        $client = $this->client->findOneBy("id", $object->client_id);
+        $object->setCategory($category);
+        $object->setFreelancer($freelancer);
+        $object->setClient($client);
+
         return $object;
     }
 
@@ -102,6 +109,14 @@ class Projet
     {
         $Db = Database::getInstance()->getConnection();
         $query = "DELETE FROM projet WHERE id = {$this->getId()}";
+        $statement = $Db->prepare($query);  
+        $statement->execute();
+    }
+
+    public function Apply()
+    {
+        $Db = Database::getInstance()->getConnection();
+        $query = "INSERT INTO applications VALUES({$this->getId()}, {$this->getFreelancer()->getId()})";
         $statement = $Db->prepare($query);  
         $statement->execute();
     }
