@@ -53,4 +53,22 @@ class ProjetController
         header("Location: ".$_SERVER['HTTP_REFERER']);
     }
 
+    public function Apply($params)
+    {   
+        $this->projetModel->setId($params['projet_id']);
+        $this->userModel->setId($params['user_id']);
+        $this->projetModel->setFreelancer($this->userModel);
+        $this->projetModel->Apply();
+        header("Location: ".$_SERVER['HTTP_REFERER']);
+    }
+
+    public function Show($params)
+    {
+        $this->projetModel->setId($params['projet_id']);
+        $projet = $this->projetModel->findOneBy("id", $this->projetModel->getId());
+        return Application::$app->Router->renderView("show", $projet);
+    }
+
+
+
 }

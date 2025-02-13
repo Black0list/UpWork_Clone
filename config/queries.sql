@@ -108,3 +108,9 @@ CREATE TABLE Projet_Terms (
     term_id INT REFERENCES Terms(id),
     PRIMARY KEY (projet_id, term_id)
 );
+
+CREATE TABLE applications (
+    projet_id INT REFERENCES Projet(id),
+    user_id INT REFERENCES utilisateur(id),
+    PRIMARY KEY (projet_id, user_id)
+);
