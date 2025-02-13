@@ -1,5 +1,5 @@
 <div class="card shadow border-0 mb-7">
-    <div class="card-header bg-primary text-white text-center">
+    <div class="card-header bg-light text-white text-center">
         <h5 class="mb-0">Project Details</h5>
     </div>
     <div class="card-body">
@@ -37,4 +37,38 @@
             </div>
         </form>
     </div>
+</div>
+<div class="card shadow border-0 mb-7">
+    <div class="card-header bg-light text-white text-center">
+        <h5 class="mb-0">Appliers</h5>
+    </div>
+    <table class="table table-hover table-bordered text-center">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Firstname</th>
+                <th scope="col">Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($datas['appliers'] as $value) { ?>
+                <tr>
+                    <td><?php echo $value->getFirstname(); ?></td>
+                    <td><?php echo $value->getEmail(); ?></td>
+                    <td>
+                        <form action="/user/deny" method="POST" style="display:inline;">
+                            <input type="hidden" name="user_id" value="<?php echo $value->getId(); ?>">
+                            <button type="submit" class="btn btn-success">Accept</button>
+                        </form>
+
+                        <form action="/user/accept" method="POST" style="display:inline;">
+                            <input type="hidden" name="user_id" value="<?php echo $value->getId(); ?>">
+                            <button type="submit" class="btn btn-danger">Deny</button>
+                        </form>
+
+                    </td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
 </div>

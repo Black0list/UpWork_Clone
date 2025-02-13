@@ -1,5 +1,5 @@
 <div class="card shadow border-0 mb-7">
-    <div class="card-header bg-primary text-white text-center">
+    <div class="card-header bg-light text-white text-center">
         <h5 class="mb-0">Projects</h5>
     </div>
     <div>
@@ -72,18 +72,18 @@
                     <div class="card-footer bg-light text-center">
                         <form action="/projet/delete" method="POST" style="display:inline;">
                             <input type="hidden" name="projet_id" value="<?php echo $project->getId(); ?>">
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> Delete</button>
                         </form>
 
                         <form action="/projet/apply" method="POST" style="display:inline;">
                             <input type="hidden" name="user_id" value="<?php echo $_SESSION['user']->getId() ?>">
                             <input type="hidden" name="projet_id" value="<?php echo $project->getId(); ?>">
-                            <button type="submit" class="btn btn-sm btn-success">Apply</button>
+                            <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-check-circle"></i> Apply</button>
                         </form>
 
                         <form action="/projet/approve" method="POST" style="display:inline;">
                             <input type="hidden" name="user_id" value="<?php echo $_SESSION['user']->getId() ?>">
-                            <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                            <button type="submit" class="btn btn-sm btn-success mt-2"><i class="bi bi-check-circle"></i> Approve</button>
                         </form>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 <div class="card shadow border-0 mb-7">
-    <div class="card-header bg-primary text-white text-center">
+    <div class="card-header bg-light text-white text-center">
         <h5 class="mb-0">Users</h5>
     </div>
     <div class="table-responsive p-4">

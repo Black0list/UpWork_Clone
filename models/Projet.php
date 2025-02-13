@@ -121,6 +121,23 @@ class Projet
         $statement->execute();
     }
 
+    public function getAppliers()
+    {
+        $Db = Database::getInstance()->getConnection();
+        $query = "SELECT * from utilisateur INNER JOIN applications ON applications.user_id = utilisateur.id INNER JOIN projet ON projet.id = applications.projet_id WHERE projet.id = {$this->getId()};";
+        $statement = $Db->prepare($query);  
+        $statement->execute();
+        $objects = $statement->fetchAll(PDO::FETCH_CLASS, User::class);
+        // var_dump($objects);
+        // die;
+        foreach ($objects as $object) {
+            $role = $this->client->getRole()->findOneBy("id", $object->role_id);
+            $object->setRole($role);
+        }
+
+        return $objects;
+    }
+
     public function __toString()
     {
         return "id : {$this->getId()}, Name : {$this->getNom()}, Description : {$this->getDescription()}, Duration : {$this->getDate()}, Status : {$this->getStatus()}, " . "Terms :" . implode(',', $this->getTerms());
