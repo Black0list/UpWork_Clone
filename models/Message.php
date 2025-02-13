@@ -1,7 +1,8 @@
 <?php
-
+namespace App\models;
 use App\config\Database;
 use App\models\User;
+use PDO;
 
 class Message
 {
@@ -9,11 +10,13 @@ class Message
     private User $sender;
     private User $receiver;
     private bool $is_read;
+    private string $firstname;
+    private String $lastname;
 
 
-    public function __construct(User $sender , User $receiver ) {
-        $this->sender = $sender;
-        $this->receiver = $receiver;
+    public function __construct() {
+        $this->sender = new User;
+        $this->receiver = new User;
     }
 
     public function setId($id)
@@ -32,7 +35,14 @@ class Message
     {
         $this->is_read = $is_read;
     }
-
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+    }
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+    }
     public function getId()
     {
         return $this->id;
@@ -49,12 +59,20 @@ class Message
     {
         return $this->is_read;
     }
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
 
 
     public function create(string $message)
     {
         $Db = Database::getInstance()->getConnection();
-        $query = "INSERT INTO message (sender_id , receiver_id , content , is_read) VALUES (" . $this->sender->getId() ." , ".$this->receiver->getId()." , " . $message ." , false);";
+        $query = "INSERT INTO message (sender_id , receiver_id , content , is_read) VALUES (" . $this->sender->getId() ." , ".$this->receiver->getId()." , " . $message ." , 'false');";
         $stmt = $Db->prepare($query); 
         $stmt->execute();
         $this->setId($Db->lastInsertId());
@@ -64,10 +82,10 @@ class Message
     public function getAll()
     {
         $Db = Database::getInstance()->getConnection();
-        $query = "SELECT  date ,content firstname , lastname  
+        $query = "SELECT content firstname , lastname  
         FROM utilisateur
         right JOIN message
-        ON  message.sender_id = 2  and message.receiver_id = 1
+        ON  message.sender_id = ".$this->sender->getId() ."  and message.receiver_id = ".$this->receiver->getId() ." 
 		and utilisateur.id = message.sender_id
 	 	ORDER BY date desc;";
         $stmt = $Db->prepare($query); 
