@@ -66,7 +66,10 @@ class ProjetController
     {
         $this->projetModel->setId($params['projet_id']);
         $projet = $this->projetModel->findOneBy("id", $this->projetModel->getId());
-        return Application::$app->Router->renderView("show", $projet);
+        $appliers = $this->projetModel->getAppliers();
+        // var_dump($appliers);
+        // die;
+        return Application::$app->Router->renderView("show", [$projet, $appliers]);
     }
 
 
