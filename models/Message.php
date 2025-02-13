@@ -1,5 +1,6 @@
 <?php
 
+use App\config\Database;
 use App\models\User;
 
 class Message
@@ -50,8 +51,28 @@ class Message
     }
 
 
-    public function sendMessage(string $message)
+    public function create(string $message)
     {
-        
+        $Db = Database::getInstance()->getConnection();
+        $query = "INSERT INTO message (sender_id , receiver_id , content , is_read) VALUES (" . $this->sender->getId() ." , ".$this->receiver->getId()." , " . $message ." , false);";
+        $stmt = $Db->prepare($query); 
+        $stmt->execute();
+        $this->setId($Db->lastInsertId());
     }
+
+
+    public function getAll()
+    {
+        $Db = Database::getInstance()->getConnection();
+        $query = "SELECT  date ,content firstname , lastname  
+        FROM utilisateur
+        right JOIN message
+        ON  message.sender_id = 2  and message.receiver_id = 1
+		and utilisateur.id = message.sender_id
+	 	ORDER BY date desc;";
+        $stmt = $Db->prepare($query); 
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_CLASS , Message::class);
+    }
+    
 }
