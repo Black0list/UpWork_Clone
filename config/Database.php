@@ -28,7 +28,6 @@ class Database {
                 die("Connection failed: " . $e->getMessage());
             }
         }
-
     }
 
     public static function getInstance(): Database {

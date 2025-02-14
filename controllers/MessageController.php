@@ -23,6 +23,13 @@ class MessageController
         return Application::$app->Router->renderView("projet", $params);
     }
 
+    public function getAll()
+    {
+        var_dump($data['client_id']);
+        die;
+        return $this->messageModel->getAll($params['data'] , $_SESSION['user']  );
+    }
+
     
 
 

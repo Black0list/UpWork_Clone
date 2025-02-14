@@ -79,18 +79,25 @@ class Message
     }
 
 
-    public function getAll()
+    public function getAll(User $sender , User $receiver)
     {
         $Db = Database::getInstance()->getConnection();
         $query = "SELECT content firstname , lastname  
         FROM utilisateur
         right JOIN message
-        ON  message.sender_id = ".$this->sender->getId() ."  and message.receiver_id = ".$this->receiver->getId() ." 
+        ON  message.sender_id = ".$sender->getId() ."  and message.receiver_id = ".$receiver->getId() ." 
 		and utilisateur.id = message.sender_id
 	 	ORDER BY date desc;";
         $stmt = $Db->prepare($query); 
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_CLASS , Message::class);
+    }
+
+    public function getConversations(User $owner)
+    {
+        $Db = Database::getInstance()->getConnection();
+        $query = "SELECT content FROM message ";
+
     }
     
 }
